@@ -2,12 +2,14 @@
 
 set -e
 
+REGION="us-west-2"
+
 deploy_new_task() {
   NEW_TASK=$(
         aws ecs update-service \
         --cluster $CLUSTER_NAME \
         --service $SERVICE_NAME \
-        --region us-west-2 \
+        --region $REGION \
         --force-new-deployment
         )
 }
@@ -17,7 +19,7 @@ get_service() {
         aws ecs describe-services \
         --cluster $CLUSTER_NAME \
         --services $SERVICE_NAME \
-        --region us-west-2 \
+        --region $REGION \
         | jq .services[].events[0].message
         )
 }
